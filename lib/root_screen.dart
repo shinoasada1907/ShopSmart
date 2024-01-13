@@ -14,7 +14,7 @@ class RootSceen extends StatefulWidget {
 
 class _RootSceenState extends State<RootSceen> {
   late List<Widget> screens;
-  int currentScreen = 0;
+  int currentScreen = 3;
   late PageController controller;
 
   @override
