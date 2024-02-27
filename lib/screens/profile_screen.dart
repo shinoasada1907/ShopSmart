@@ -24,146 +24,149 @@ class ProfileScreen extends StatelessWidget {
           fontSize: 20,
         ),
       ),
-      body: Column(
-        children: [
-          const Visibility(
-            visible: false,
-            child: Padding(
-              padding: EdgeInsets.all(18.0),
-              child: TitlesTextWidget(
-                label: 'Please Login to have unlimited access',
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            const Visibility(
+              visible: false,
+              child: Padding(
+                padding: EdgeInsets.all(18.0),
+                child: TitlesTextWidget(
+                  label: 'Please Login to have unlimited access',
+                ),
               ),
             ),
-          ),
-          Visibility(
-            visible: true,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 5,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).cardColor,
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.background,
-                        width: 3,
-                      ),
-                      image: const DecorationImage(
-                        image: NetworkImage(
-                          'https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg',
+            Visibility(
+              visible: true,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).cardColor,
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.background,
+                          width: 3,
                         ),
-                        fit: BoxFit.fill,
+                        image: const DecorationImage(
+                          image: NetworkImage(
+                            'https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg',
+                          ),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TitlesTextWidget(label: 'Sinon Sama'),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        SubtitleTextWidget(label: 'bonzed2001@gmail.com'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(
+                    thickness: 1,
                   ),
                   const SizedBox(
-                    width: 10,
+                    height: 10,
                   ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TitlesTextWidget(label: 'Sinon Sama'),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      SubtitleTextWidget(label: 'bonzed2001@gmail.com'),
-                    ],
+                  const TitlesTextWidget(
+                    label: 'General',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomListTitle(
+                    imagePath: AssetsManager.orderSvg,
+                    text: 'All Orders',
+                    function: () {},
+                  ),
+                  CustomListTitle(
+                    imagePath: AssetsManager.wishlistSvg,
+                    text: 'Whishlist',
+                    function: () {},
+                  ),
+                  CustomListTitle(
+                    imagePath: AssetsManager.recent,
+                    text: 'Viewed recently',
+                    function: () {},
+                  ),
+                  CustomListTitle(
+                    imagePath: AssetsManager.address,
+                    text: 'Address',
+                    function: () {},
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  const Divider(
+                    thickness: 1,
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  const TitlesTextWidget(
+                    label: 'Setting',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SwitchListTile(
+                    secondary: Image.asset(
+                      AssetsManager.theme,
+                      height: 34,
+                    ),
+                    title: Text(themeProvider.getIsDarkTheme
+                        ? 'Dark Mode'
+                        : 'Light Mode'),
+                    value: themeProvider.getIsDarkTheme,
+                    onChanged: (value) {
+                      themeProvider.setDarkTheme(themeValue: value);
+                    },
                   ),
                 ],
               ),
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Divider(
-                  thickness: 1,
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const TitlesTextWidget(
-                  label: 'General',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomListTitle(
-                  imagePath: AssetsManager.orderSvg,
-                  text: 'All Orders',
-                  function: () {},
-                ),
-                CustomListTitle(
-                  imagePath: AssetsManager.wishlistSvg,
-                  text: 'Whishlist',
-                  function: () {},
-                ),
-                CustomListTitle(
-                  imagePath: AssetsManager.recent,
-                  text: 'Viewed recently',
-                  function: () {},
-                ),
-                CustomListTitle(
-                  imagePath: AssetsManager.address,
-                  text: 'Address',
-                  function: () {},
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                const Divider(
-                  thickness: 1,
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                const TitlesTextWidget(
-                  label: 'Setting',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SwitchListTile(
-                  secondary: Image.asset(
-                    AssetsManager.theme,
-                    height: 34,
-                  ),
-                  title: Text(themeProvider.getIsDarkTheme
-                      ? 'Dark Mode'
-                      : 'Light Mode'),
-                  value: themeProvider.getIsDarkTheme,
-                  onChanged: (value) {
-                    themeProvider.setDarkTheme(themeValue: value);
-                  },
-                ),
-              ],
-            ),
-          ),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+              ),
+              onPressed: () {},
+              icon: const Icon(Icons.login),
+              label: const Text(
+                'Login',
               ),
             ),
-            onPressed: () {},
-            icon: const Icon(Icons.login),
-            label: const Text(
-              'Login',
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:shopsmart/screens/cart_screen.dart';
+import 'package:shopsmart/screens/cart/cart_screen.dart';
 import 'package:shopsmart/screens/home_screen.dart';
 import 'package:shopsmart/screens/profile_screen.dart';
 import 'package:shopsmart/screens/search_screen.dart';
@@ -14,7 +14,7 @@ class RootSceen extends StatefulWidget {
 
 class _RootSceenState extends State<RootSceen> {
   late List<Widget> screens;
-  int currentScreen = 3;
+  int currentScreen = 2;
   late PageController controller;
 
   @override
