@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/theme_data.dart';
+import 'package:shopsmart/screens/cart/quantity_btm_sheet.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 import 'package:shopsmart/widgets/title_text.dart';
 
@@ -69,7 +70,21 @@ class CartWidget extends StatelessWidget {
                           color: Colors.blue,
                         ),
                         OutlinedButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await showModalBottomSheet(
+                                backgroundColor:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(30),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) {
+                                  return const QuantityBottomSheetWidget();
+                                });
+                          },
                           icon: const Icon(IconlyLight.arrowDown2),
                           label: const Text(
                             'Qty: 6',
