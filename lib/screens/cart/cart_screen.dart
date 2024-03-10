@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shopsmart/screens/cart/bottom_checkout.dart';
 import 'package:shopsmart/screens/cart/cart_widget.dart';
 import 'package:shopsmart/services/assets_manager.dart';
-import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/empty_bag.dart';
 import 'package:shopsmart/widgets/title_text.dart';
 

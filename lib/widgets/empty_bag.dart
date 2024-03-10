@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../services/assets_manager.dart';
 import 'subtitle_text.dart';
 import 'title_text.dart';
 
