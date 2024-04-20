@@ -1,6 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:shopsmart/consts/app_constants.dart';
 import 'package:shopsmart/screens/cart/quantity_btm_sheet.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 import 'package:shopsmart/widgets/title_text.dart';
@@ -21,8 +22,7 @@ class CartWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: FancyShimmerImage(
-                  imageUrl:
-                      "https://i.pinimg.com/564x/b5/3a/95/b53a9533010db2ea5a3458ca1edf553c.jpg",
+                  imageUrl: AppConstant.imageUrl,
                   height: size.height * 0.2,
                   width: size.height * 0.2,
                 ),

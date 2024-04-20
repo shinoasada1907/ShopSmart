@@ -1,7 +1,12 @@
+import 'package:card_swiper/card_swiper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shopsmart/providers/theme_provider.dart';
-import 'package:shopsmart/widgets/subtitle_text.dart';
+import 'package:shopsmart/consts/app_constants.dart';
+// import 'package:provider/provider.dart';
+// import 'package:shopsmart/providers/theme_provider.dart';
+import 'package:shopsmart/services/assets_manager.dart';
+import 'package:shopsmart/widgets/app_name_text.dart';
+import 'package:shopsmart/widgets/products/latest_arrival.dart';
 import 'package:shopsmart/widgets/title_text.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,28 +14,62 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
+    // final themeProvider = Provider.of<ThemeProvider>(context);
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      // backgroundColor: AppColors.lightScaffoldColor,
-      body: Center(
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(AssetsManager.shoppingCart),
+        ),
+        title: const AppNameTextWidget(
+          fontSize: 20,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TitlesTextWidget(
-              label: 'Hello this is a Title' * 10,
+            const SizedBox(
+              height: 15,
             ),
-            const SubtitleTextWidget(
-              label: 'Hello World',
+            SizedBox(
+              height: size.height * 0.25,
+              child: ClipRRect(
+                child: Swiper(
+                  itemBuilder: (BuildContext context, int index) {
+                    return Image.asset(
+                      AppConstant.bannersImages[index],
+                      fit: BoxFit.fill,
+                    );
+                  },
+                  itemCount: AppConstant.bannersImages.length,
+                  pagination: const SwiperPagination(
+                    builder: DotSwiperPaginationBuilder(
+                        activeColor: Colors.red, color: Colors.white),
+                  ),
+                ),
+              ),
             ),
-            SwitchListTile(
-              title: Text(
-                  themeProvider.getIsDarkTheme ? 'Dark Mode' : 'Light Mode'),
-              value: themeProvider.getIsDarkTheme,
-              onChanged: (value) {
-                themeProvider.setDarkTheme(themeValue: value);
-              },
+            const SizedBox(
+              height: 15,
             ),
+            const TitlesTextWidget(label: "Lates Arrival"),
+            const SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              height: size.height * 0.2,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return const LatestArrivalProductWidget();
+                },
+              ),
+            )
           ],
         ),
       ),
