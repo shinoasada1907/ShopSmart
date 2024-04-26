@@ -1,11 +1,10 @@
 import 'dart:developer';
 
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/app_constants.dart';
+import 'package:shopsmart/screens/inner_screen/product_details.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 
 class LatestArrivalProductWidget extends StatelessWidget {
@@ -17,8 +16,9 @@ class LatestArrivalProductWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           log('To Do add the navigate to the product  details screen');
+          await Navigator.pushNamed(context, ProductDetailsScreen.routeName);
         },
         child: SizedBox(
           width: size.width * 0.45,
@@ -36,7 +36,7 @@ class LatestArrivalProductWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: 5,
+                width: 8,
               ),
               Flexible(
                 child: Column(
@@ -45,9 +45,12 @@ class LatestArrivalProductWidget extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      'Text' * 15,
+                      'Title' * 15,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(
+                      width: 5,
                     ),
                     FittedBox(
                       child: Row(
@@ -62,6 +65,9 @@ class LatestArrivalProductWidget extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ),
+                    const SizedBox(
+                      width: 5,
                     ),
                     const FittedBox(
                       child: SubtitleTextWidget(

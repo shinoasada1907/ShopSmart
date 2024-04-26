@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/app_constants.dart';
+import 'package:shopsmart/screens/inner_screen/product_details.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 import 'package:shopsmart/widgets/title_text.dart';
 
@@ -23,8 +24,9 @@ class _ProductWidgetState extends State<ProductWidget> {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           log("Add the navigate to the product details screen");
+          await Navigator.pushNamed(context, ProductDetailsScreen.routeName);
         },
         child: Column(
           children: [

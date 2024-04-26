@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:shopsmart/consts/theme_data.dart';
 import 'package:shopsmart/providers/theme_provider.dart';
 import 'package:shopsmart/root_screen.dart';
+import 'package:shopsmart/screens/inner_screen/product_details.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -29,6 +31,10 @@ class MyApp extends StatelessWidget {
               context: context,
             ),
             home: const RootSceen(),
+            routes: {
+              ProductDetailsScreen.routeName: (context) =>
+                  const ProductDetailsScreen(),
+            },
           );
         },
       ),
