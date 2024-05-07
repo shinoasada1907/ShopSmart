@@ -1,12 +1,14 @@
+// ignore_for_file: unnecessary_import
+
 import 'dart:developer';
 
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/app_constants.dart';
 import 'package:shopsmart/screens/inner_screen/product_details.dart';
+import 'package:shopsmart/widgets/products/heart_btn.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 import 'package:shopsmart/widgets/title_text.dart';
 
@@ -53,12 +55,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                       maxLines: 2,
                     ),
                   ),
-                  Flexible(
+                  const Flexible(
                     flex: 2,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(IconlyLight.heart),
-                    ),
+                    child: HeartBottonWidget(),
                   ),
                 ],
               ),

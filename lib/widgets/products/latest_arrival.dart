@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/app_constants.dart';
 import 'package:shopsmart/screens/inner_screen/product_details.dart';
+import 'package:shopsmart/widgets/products/heart_btn.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 
 class LatestArrivalProductWidget extends StatelessWidget {
@@ -55,10 +55,7 @@ class LatestArrivalProductWidget extends StatelessWidget {
                     FittedBox(
                       child: Row(
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(IconlyLight.heart),
-                          ),
+                          const HeartBottonWidget(),
                           IconButton(
                             onPressed: () {},
                             icon: const Icon(Icons.add_shopping_cart_outlined),

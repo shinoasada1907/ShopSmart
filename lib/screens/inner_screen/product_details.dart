@@ -1,10 +1,8 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/app_constants.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
+import 'package:shopsmart/widgets/products/heart_btn.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 import 'package:shopsmart/widgets/title_text.dart';
 
@@ -85,16 +83,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade200,
-                            shape: BoxShape.circle,
-                          ),
-                          child: IconButton(
-                            onPressed: () {},
-                            style: IconButton.styleFrom(elevation: 10),
-                            icon: const Icon(IconlyLight.heart),
-                          ),
+                        HeartBottonWidget(
+                          bkgColor: Colors.blue.shade100,
                         ),
                         const SizedBox(
                           width: 20,
