@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmart/providers/theme_provider.dart';
+import 'package:shopsmart/screens/inner_screen/viewed_recently.dart';
+import 'package:shopsmart/screens/inner_screen/wishlist.dart';
 import 'package:shopsmart/services/assets_manager.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
@@ -109,12 +111,17 @@ class ProfileScreen extends StatelessWidget {
                   CustomListTitle(
                     imagePath: AssetsManager.wishlistSvg,
                     text: 'Whishlist',
-                    function: () {},
+                    function: () {
+                      Navigator.pushNamed(context, WishlistScreen.routeName);
+                    },
                   ),
                   CustomListTitle(
                     imagePath: AssetsManager.recent,
                     text: 'Viewed recently',
-                    function: () {},
+                    function: () {
+                      Navigator.pushNamed(
+                          context, ViewedRecentlyScreen.routeName);
+                    },
                   ),
                   CustomListTitle(
                     imagePath: AssetsManager.address,

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shopsmart/services/assets_manager.dart';
 import 'package:shopsmart/widgets/products/product_widget.dart';
 import 'package:shopsmart/widgets/title_text.dart';
