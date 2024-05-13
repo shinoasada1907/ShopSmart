@@ -5,6 +5,7 @@ import 'package:shopsmart/providers/theme_provider.dart';
 import 'package:shopsmart/screens/inner_screen/viewed_recently.dart';
 import 'package:shopsmart/screens/inner_screen/wishlist.dart';
 import 'package:shopsmart/services/assets_manager.dart';
+import 'package:shopsmart/services/my_app_function.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 
@@ -159,17 +160,26 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+            Center(
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-              ),
-              onPressed: () {},
-              icon: const Icon(Icons.login),
-              label: const Text(
-                'Login',
+                icon: const Icon(Icons.login),
+                label: const Text(
+                  'Login',
+                ),
+                onPressed: () async {
+                  await MyAppFunctions.showErrorOrWarningDialog(
+                    context: context,
+                    subTitle: 'Are you sure you want to signout ?',
+                    fct: () {},
+                    isError: false,
+                  );
+                },
               ),
             ),
           ],
