@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopsmart/consts/theme_data.dart';
 import 'package:shopsmart/providers/theme_provider.dart';
 import 'package:shopsmart/root_screen.dart';
+import 'package:shopsmart/screens/auth/login.dart';
 import 'package:shopsmart/screens/inner_screen/product_details.dart';
 import 'package:shopsmart/screens/inner_screen/viewed_recently.dart';
 import 'package:shopsmart/screens/inner_screen/wishlist.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
               isDarkTheme: themeProvider.getIsDarkTheme,
               context: context,
             ),
-            home: const RootSceen(),
+            home: const LoginScreen(),
             routes: {
               ProductDetailsScreen.routeName: (context) =>
                   const ProductDetailsScreen(),
