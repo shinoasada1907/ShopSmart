@@ -5,7 +5,6 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/validator.dart';
 import 'package:shopsmart/root_screen.dart';
 import 'package:shopsmart/screens/auth/register.dart';
-import 'package:shopsmart/screens/inner_screen/product_details.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/auth/google_btn.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
