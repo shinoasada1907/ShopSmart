@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/validator.dart';
+import 'package:shopsmart/root_screen.dart';
+import 'package:shopsmart/screens/auth/register.dart';
+import 'package:shopsmart/screens/inner_screen/product_details.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
+import 'package:shopsmart/widgets/auth/google_btn.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 import 'package:shopsmart/widgets/title_text.dart';
 
@@ -15,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool obscureText = true;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
@@ -106,14 +111,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 16,
                       ),
                       TextFormField(
+                        obscureText: obscureText,
                         controller: _passwordController,
                         focusNode: _passwordFocusNode,
-                        textInputAction: TextInputAction
-                            .done, //icon action in keyboad of the phone
+                        textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.visiblePassword,
-                        decoration: const InputDecoration(
-                          hintText: "**********",
-                          prefixIcon: Icon(
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                            icon: Icon(
+                              obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          ),
+                          hintText: "***********",
+                          prefixIcon: const Icon(
                             IconlyLight.lock,
                           ),
                         ),
@@ -161,6 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () async {
                             await _loginFunction();
+                            Navigator.pushNamed(context, RootSceen.routeName);
                           },
                         ),
                       ),
@@ -173,52 +191,60 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(
                         height: 16,
                       ),
-                      Row(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.all(12),
-                              backgroundColor: Colors.lightBlue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                      SizedBox(
+                        height: kBottomNavigationBarHeight + 10,
+                        child: Row(
+                          children: [
+                            const Expanded(
+                              flex: 2,
+                              child: SizedBox(
+                                height: kBottomNavigationBarHeight,
+                                child: FittedBox(
+                                  child: GoogleButton(),
+                                ),
                               ),
                             ),
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(color: Colors.white),
+                            const SizedBox(
+                              width: 8,
                             ),
-                            onPressed: () async {
-                              await _loginFunction();
-                            },
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.all(12),
-                              backgroundColor: Colors.lightBlue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                            Expanded(
+                              child: SizedBox(
+                                height: kBottomNavigationBarHeight,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.all(12),
+                                    backgroundColor: Colors.lightBlue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Guest?',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () async {
+                                    await _loginFunction();
+                                  },
+                                ),
                               ),
                             ),
-                            child: const Text(
-                              'Guest?',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () async {
-                              await _loginFunction();
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SubtitleTextWidget(label: 'New here?'),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RegisterScreen.routName);
+                            },
                             child: const SubtitleTextWidget(
-                              label: 'Forgot password?',
+                              label: 'Sign up',
                               fontStyle: FontStyle.italic,
                               textDecoration: TextDecoration.underline,
                             ),
