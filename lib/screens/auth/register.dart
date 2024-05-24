@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shopsmart/consts/validator.dart';
+import 'package:shopsmart/services/my_app_function.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/auth/image_picker_widget.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
@@ -66,6 +67,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
     FocusScope.of(context).unfocus();
   }
 
+  Future<void> localImagePicker() async {
+    final ImagePicker imagePicker = ImagePicker();
+    await MyAppFunctions.imagePickerDialog(
+      context: context,
+      cameraFct: () async {
+        _pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
+        setState(() {
+          _pickedImage;
+        });
+      },
+      galleryFct: () async {
+        _pickedImage = await imagePicker.pickImage(source: ImageSource.gallery);
+        setState(() {
+          _pickedImage;
+        });
+      },
+      removeFct: () async {
+        setState(() {
+          _pickedImage = null;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -106,7 +131,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: size.width * 0.3,
                     child: PickImageWidget(
                       pickedImage: _pickedImage,
-                      function: null,
+                      function: () async {
+                        await localImagePicker();
+                      },
                     )),
                 const SizedBox(
                   height: 30,

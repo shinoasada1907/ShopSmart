@@ -25,7 +25,7 @@ class PickImageWidget extends StatelessWidget {
             child: pickedImage == null
                 ? Container(
                     decoration: BoxDecoration(
-                      border: Border.all(),
+                      border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(
                         18.0,
                       ),
@@ -45,7 +45,9 @@ class PickImageWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.0),
             color: Colors.lightBlue,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                function!();
+              },
               splashColor: Colors.red,
               borderRadius: BorderRadius.circular(12.0),
               child: const Padding(

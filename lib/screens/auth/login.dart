@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopsmart/consts/validator.dart';
 import 'package:shopsmart/root_screen.dart';
+import 'package:shopsmart/screens/auth/forgot_password.dart';
 import 'package:shopsmart/screens/auth/register.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/auth/google_btn.dart';
@@ -11,6 +12,7 @@ import 'package:shopsmart/widgets/subtitle_text.dart';
 import 'package:shopsmart/widgets/title_text.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = '/Login';
   const LoginScreen({super.key});
 
   @override
@@ -146,7 +148,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, ForgotPasswordScreen.routeName);
+                          },
                           child: const SubtitleTextWidget(
                             label: 'Forgot password?',
                             fontStyle: FontStyle.italic,

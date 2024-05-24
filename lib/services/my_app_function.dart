@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shopsmart/services/assets_manager.dart';
@@ -63,6 +64,57 @@ class MyAppFunctions {
                 ],
               )
             ],
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<void> imagePickerDialog(
+      {required BuildContext context,
+      required Function cameraFct,
+      required Function galleryFct,
+      required Function removeFct}) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const SubtitleTextWidget(label: 'Choose option'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                TextButton.icon(
+                  onPressed: () {
+                    cameraFct();
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  icon: const Icon(Icons.camera),
+                  label: const Text('Camera'),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    galleryFct();
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  icon: const Icon(Icons.image),
+                  label: const Text('Gallery'),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    removeFct();
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  icon: const Icon(Icons.remove_circle_outline),
+                  label: const Text('Remove'),
+                ),
+              ],
+            ),
           ),
         );
       },

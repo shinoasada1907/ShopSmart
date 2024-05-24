@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmart/providers/theme_provider.dart';
+import 'package:shopsmart/screens/auth/login.dart';
+import 'package:shopsmart/screens/inner_screen/orders/order_screen.dart';
 import 'package:shopsmart/screens/inner_screen/viewed_recently.dart';
 import 'package:shopsmart/screens/inner_screen/wishlist.dart';
 import 'package:shopsmart/services/assets_manager.dart';
-import 'package:shopsmart/services/my_app_function.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 
@@ -107,7 +108,9 @@ class ProfileScreen extends StatelessWidget {
                   CustomListTitle(
                     imagePath: AssetsManager.orderSvg,
                     text: 'All Orders',
-                    function: () {},
+                    function: () {
+                      Navigator.pushNamed(context, OrdersScreenFree.routeName);
+                    },
                   ),
                   CustomListTitle(
                     imagePath: AssetsManager.wishlistSvg,
@@ -173,12 +176,13 @@ class ProfileScreen extends StatelessWidget {
                   'Login',
                 ),
                 onPressed: () async {
-                  await MyAppFunctions.showErrorOrWarningDialog(
-                    context: context,
-                    subTitle: 'Are you sure you want to signout ?',
-                    fct: () {},
-                    isError: false,
-                  );
+                  // await MyAppFunctions.showErrorOrWarningDialog(
+                  //   context: context,
+                  //   subTitle: 'Are you sure you want to signout ?',
+                  //   fct: () {},
+                  //   isError: false,
+                  // );
+                  Navigator.pushNamed(context, LoginScreen.routeName);
                 },
               ),
             ),
