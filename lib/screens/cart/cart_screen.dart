@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopsmart/providers/cart_provider.dart';
 import 'package:shopsmart/screens/cart/bottom_checkout.dart';
 import 'package:shopsmart/screens/cart/cart_widget.dart';
 import 'package:shopsmart/services/assets_manager.dart';
@@ -12,7 +14,9 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isEmpty
+    final cartProvider = Provider.of<CartProvider>(context);
+
+    return cartProvider.getcartItems.isEmpty
         ? Scaffold(
             body: EmptyBagWidget(
               imagePath: AssetsManager.shoppingBasket,
@@ -29,8 +33,8 @@ class CartScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(AssetsManager.shoppingCart),
               ),
-              title: const TitlesTextWidget(
-                label: 'Cart(6)',
+              title: TitlesTextWidget(
+                label: 'Cart(${cartProvider.getcartItems.length})',
               ),
               actions: [
                 IconButton(
@@ -43,7 +47,7 @@ class CartScreen extends StatelessWidget {
               ],
             ),
             body: ListView.builder(
-                itemCount: 10,
+                itemCount: cartProvider.getcartItems.length,
                 itemBuilder: (context, index) {
                   return const CartWidget();
                 }),
