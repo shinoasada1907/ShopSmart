@@ -46,11 +46,24 @@ class CartScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: ListView.builder(
-                itemCount: cartProvider.getcartItems.length,
-                itemBuilder: (context, index) {
-                  return const CartWidget();
-                }),
+            body: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: cartProvider.getcartItems.length,
+                      itemBuilder: (context, index) {
+                        return ChangeNotifierProvider.value(
+                          value:
+                              cartProvider.getcartItems.values.toList()[index],
+                          child: const CartWidget(),
+                        );
+                      }),
+                ),
+                const SizedBox(
+                  height: kBottomNavigationBarHeight + 10,
+                ),
+              ],
+            ),
           );
   }
 }
