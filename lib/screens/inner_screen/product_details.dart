@@ -93,6 +93,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             children: [
                               HeartBottonWidget(
                                 bkgColor: Colors.blue.shade100,
+                                productId: getCurrentProduct.productId,
                               ),
                               const SizedBox(
                                 width: 20,

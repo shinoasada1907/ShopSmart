@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmart/models/cart_model.dart';
+import 'package:shopsmart/providers/cart_provider.dart';
 import 'package:shopsmart/providers/products_provider.dart';
 import 'package:shopsmart/screens/cart/quantity_btm_sheet.dart';
 import 'package:shopsmart/widgets/products/heart_btn.dart';
@@ -19,6 +20,7 @@ class CartWidget extends StatelessWidget {
     final productsProvider = Provider.of<ProductsProvider>(context);
     final getCurrentProduct =
         productsProvider.findByProductId(cartModel.productId);
+    final cartProvider = Provider.of<CartProvider>(context);
     return getCurrentProduct == null
         ? const SizedBox.shrink()
         : FittedBox(
@@ -54,13 +56,19 @@ class CartWidget extends StatelessWidget {
                               Column(
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      cartProvider.removeOneItem(
+                                        productId: getCurrentProduct.productId,
+                                      );
+                                    },
                                     icon: const Icon(
                                       Icons.clear,
                                       color: Colors.red,
                                     ),
                                   ),
-                                  const HeartBottonWidget(),
+                                  HeartBottonWidget(
+                                    productId: getCurrentProduct.productId,
+                                  ),
                                 ],
                               ),
                             ],
@@ -85,7 +93,9 @@ class CartWidget extends StatelessWidget {
                                       ),
                                       context: context,
                                       builder: (context) {
-                                        return const QuantityBottomSheetWidget();
+                                        return QuantityBottomSheetWidget(
+                                          cartModel: cartModel,
+                                        );
                                       });
                                 },
                                 icon: const Icon(IconlyLight.arrowDown2),

@@ -41,7 +41,7 @@ class CartBottomSheetWidget extends StatelessWidget {
                     ),
                     SubtitleTextWidget(
                       label:
-                          '${cartProvider.getTotal(productProvider: productsProvider)}\$',
+                          '${cartProvider.getTotal(productProvider: productsProvider).toStringAsFixed(2)}\$',
                       color: Colors.blue,
                     )
                   ],

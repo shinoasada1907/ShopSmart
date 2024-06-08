@@ -1,6 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopsmart/consts/app_constants.dart';
+import 'package:shopsmart/providers/products_provider.dart';
 // import 'package:provider/provider.dart';
 // import 'package:shopsmart/providers/theme_provider.dart';
 import 'package:shopsmart/services/assets_manager.dart';
@@ -14,7 +16,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final themeProvider = Provider.of<ThemeProvider>(context);
+    final productsProvider = Provider.of<ProductsProvider>(context);
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +71,9 @@ class HomeScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: 10,
                   itemBuilder: (context, index) {
-                    return const LatestArrivalProductWidget();
+                    return ChangeNotifierProvider.value(
+                      value: productsProvider.getProducts[index],
+                      child: const LatestArrivalProductWidget());
                   },
                 ),
               ),
