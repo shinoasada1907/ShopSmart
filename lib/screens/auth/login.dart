@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopsmart/consts/validator.dart';
 import 'package:shopsmart/root_screen.dart';
 import 'package:shopsmart/screens/auth/forgot_password.dart';
 import 'package:shopsmart/screens/auth/register.dart';
+import 'package:shopsmart/services/my_app_function.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/auth/google_btn.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
@@ -28,6 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
   late final FocusNode _passwordFocusNode;
 
   final _formKey = GlobalKey<FormState>();
+
+  bool isLoading = false;
+
+  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -53,6 +60,40 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _loginFunction() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      try {
+        setState(() {
+          isLoading = true;
+        });
+        await auth.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        Fluttertoast.showToast(
+          msg: "Login Successfull",
+          textColor: Colors.white,
+        );
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, RootSceen.routeName);
+      } on FirebaseAuthException catch (e) {
+        await MyAppFunctions.showErrorOrWarningDialog(
+          context: context,
+          subTitle: e.message.toString(),
+          fct: () {},
+        );
+      } catch (e) {
+        await MyAppFunctions.showErrorOrWarningDialog(
+          context: context,
+          subTitle: e.toString(),
+          fct: () {},
+        );
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   @override

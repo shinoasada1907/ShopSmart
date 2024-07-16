@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmart/consts/theme_data.dart';
@@ -26,51 +27,77 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) {
-          return ThemeProvider();
-        }),
-        ChangeNotifierProvider(create: (_) {
-          return ProductsProvider();
-        }),
-        ChangeNotifierProvider(create: (_) {
-          return CartProvider();
-        }),
-        ChangeNotifierProvider(create: (_) {
-          return WishlistProvider();
-        }),
-        ChangeNotifierProvider(create: (_) {
-          return ViewedProductProvider();
-        })
-      ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
-          return MaterialApp(
-            title: 'Shop Smart',
-            debugShowCheckedModeBanner: false,
-            theme: Style.themeData(
-              isDarkTheme: themeProvider.getIsDarkTheme,
-              context: context,
+    return FutureBuilder<FirebaseApp>(
+        future: Firebase.initializeApp(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Scaffold(
+                body: Center(
+                  child: SelectableText(
+                    snapshot.error.toString(),
+                  ),
+                ),
+              ),
+            );
+          }
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_) {
+                return ThemeProvider();
+              }),
+              ChangeNotifierProvider(create: (_) {
+                return ProductsProvider();
+              }),
+              ChangeNotifierProvider(create: (_) {
+                return CartProvider();
+              }),
+              ChangeNotifierProvider(create: (_) {
+                return WishlistProvider();
+              }),
+              ChangeNotifierProvider(create: (_) {
+                return ViewedProductProvider();
+              })
+            ],
+            child: Consumer<ThemeProvider>(
+              builder: (context, themeProvider, child) {
+                return MaterialApp(
+                  title: 'Shop Smart',
+                  debugShowCheckedModeBanner: false,
+                  theme: Style.themeData(
+                    isDarkTheme: themeProvider.getIsDarkTheme,
+                    context: context,
+                  ),
+                  home: const LoginScreen(),
+                  routes: {
+                    RootSceen.routeName: (context) => const RootSceen(),
+                    ProductDetailsScreen.routeName: (context) =>
+                        const ProductDetailsScreen(),
+                    WishlistScreen.routeName: (context) =>
+                        const WishlistScreen(),
+                    ViewedRecentlyScreen.routeName: (context) =>
+                        const ViewedRecentlyScreen(),
+                    RegisterScreen.routName: (context) =>
+                        const RegisterScreen(),
+                    LoginScreen.routeName: (context) => const LoginScreen(),
+                    OrdersScreenFree.routeName: (context) =>
+                        const OrdersScreenFree(),
+                    ForgotPasswordScreen.routeName: (context) =>
+                        const ForgotPasswordScreen(),
+                    SearchScreen.routName: (context) => const SearchScreen(),
+                  },
+                );
+              },
             ),
-            home: const LoginScreen(),
-            routes: {
-              RootSceen.routeName: (context) => const RootSceen(),
-              ProductDetailsScreen.routeName: (context) =>
-                  const ProductDetailsScreen(),
-              WishlistScreen.routeName: (context) => const WishlistScreen(),
-              ViewedRecentlyScreen.routeName: (context) =>
-                  const ViewedRecentlyScreen(),
-              RegisterScreen.routName: (context) => const RegisterScreen(),
-              LoginScreen.routeName: (context) => const LoginScreen(),
-              OrdersScreenFree.routeName: (context) => const OrdersScreenFree(),
-              ForgotPasswordScreen.routeName: (context) =>
-                  const ForgotPasswordScreen(),
-              SearchScreen.routName: (context) => const SearchScreen(),
-            },
           );
-        },
-      ),
-    );
+        });
   }
 }

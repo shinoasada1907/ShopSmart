@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
@@ -7,14 +8,21 @@ import 'package:shopsmart/screens/inner_screen/orders/order_screen.dart';
 import 'package:shopsmart/screens/inner_screen/viewed_recently.dart';
 import 'package:shopsmart/screens/inner_screen/wishlist.dart';
 import 'package:shopsmart/services/assets_manager.dart';
+import 'package:shopsmart/services/my_app_function.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 
 import '../widgets/title_text.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -171,18 +179,21 @@ class ProfileScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                icon: const Icon(Icons.login),
-                label: const Text(
-                  'Login',
+                icon: Icon(user == null ? Icons.login : Icons.logout),
+                label: Text(
+                  user == null ? 'Login' : 'Logout',
                 ),
                 onPressed: () async {
-                  // await MyAppFunctions.showErrorOrWarningDialog(
-                  //   context: context,
-                  //   subTitle: 'Are you sure you want to signout ?',
-                  //   fct: () {},
-                  //   isError: false,
-                  // );
-                  Navigator.pushNamed(context, LoginScreen.routeName);
+                  if (user == null) {
+                    Navigator.pushNamed(context, LoginScreen.routeName);
+                  } else {
+                    await MyAppFunctions.showErrorOrWarningDialog(
+                      context: context,
+                      subTitle: 'Are you sure you want to signout ?',
+                      fct: () {},
+                      isError: false,
+                    );
+                  }
                 },
               ),
             ),

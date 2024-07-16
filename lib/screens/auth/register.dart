@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shopsmart/consts/validator.dart';
+import 'package:shopsmart/root_screen.dart';
 import 'package:shopsmart/services/my_app_function.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/auth/image_picker_widget.dart';
@@ -31,6 +34,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formkey = GlobalKey<FormState>();
 
   XFile? _pickedImage;
+
+  bool isLoading = false;
+
+  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -65,6 +72,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> _registerFCT() async {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      try {
+        setState(() {
+          isLoading = true;
+        });
+        await auth.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        Fluttertoast.showToast(
+          msg: "An account has been created",
+          textColor: Colors.white,
+        );
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, RootSceen.routeName);
+      } on FirebaseAuthException catch (e) {
+        await MyAppFunctions.showErrorOrWarningDialog(
+          context: context,
+          subTitle: e.message.toString(),
+          fct: () {},
+        );
+      } catch (e) {
+        await MyAppFunctions.showErrorOrWarningDialog(
+          context: context,
+          subTitle: e.toString(),
+          fct: () {},
+        );
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   Future<void> localImagePicker() async {

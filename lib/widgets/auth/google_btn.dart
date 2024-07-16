@@ -1,8 +1,54 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shopsmart/root_screen.dart';
+import 'package:shopsmart/services/my_app_function.dart';
 
 class GoogleButton extends StatelessWidget {
   const GoogleButton({super.key});
+
+  Future<void> _googleSignIn({required BuildContext context}) async {
+    try {
+      final googleSignIn = GoogleSignIn();
+      final googleAccount = await googleSignIn.signIn();
+      log('Hello1');
+      if (googleAccount != null) {
+        final googleAuth = await googleAccount.authentication;
+        log('Hello2');
+        log(googleAuth.accessToken.toString());
+        log(googleAuth.idToken.toString());
+        if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+          final authResults = await FirebaseAuth.instance
+              .signInWithCredential(GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          ));
+          log(authResults.credential!.token.toString());
+          log('Hello3');
+        }
+      }
+      WidgetsBinding.instance.addPostFrameCallback(
+        (timeStamp) {
+          Navigator.pushReplacementNamed(context, RootSceen.routeName);
+        },
+      );
+    } on FirebaseAuthException catch (e) {
+      await MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subTitle: e.message.toString(),
+        fct: () {},
+      );
+    } catch (e) {
+      await MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subTitle: e.toString(),
+        fct: () {},
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +69,9 @@ class GoogleButton extends StatelessWidget {
         'Sign in with Google',
         style: TextStyle(color: Colors.black),
       ),
-      onPressed: () async {},
+      onPressed: () async {
+        await _googleSignIn(context: context);
+      },
     );
   }
 }
