@@ -5,6 +5,7 @@ import 'package:shopsmart/consts/theme_data.dart';
 import 'package:shopsmart/providers/cart_provider.dart';
 import 'package:shopsmart/providers/products_provider.dart';
 import 'package:shopsmart/providers/theme_provider.dart';
+import 'package:shopsmart/providers/user_provider.dart';
 import 'package:shopsmart/providers/viewed_recently_provider.dart';
 import 'package:shopsmart/providers/wishlist_provider.dart';
 import 'package:shopsmart/root_screen.dart';
@@ -65,6 +66,9 @@ class MyApp extends StatelessWidget {
               }),
               ChangeNotifierProvider(create: (_) {
                 return ViewedProductProvider();
+              }),
+              ChangeNotifierProvider(create: (_) {
+                return UserProvider();
               })
             ],
             child: Consumer<ThemeProvider>(
