@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shopsmart/services/assets_manager.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
 

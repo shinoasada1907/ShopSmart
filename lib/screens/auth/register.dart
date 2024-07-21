@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -41,6 +44,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final auth = FirebaseAuth.instance;
 
+  String? userImageURL;
+
   @override
   void initState() {
     _nameController = TextEditingController();
@@ -75,6 +80,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
+    if (_pickedImage == null) {
+      MyAppFunctions.showErrorOrWarningDialog(
+          context: context,
+          subTitle: 'Make sure to pick up an image',
+          fct: () {});
+      return;
+    }
+
     if (isValid) {
       try {
         setState(() {
@@ -88,10 +101,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         final User? user = auth.currentUser;
         final String uid = user!.uid;
 
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('usersImages')
+            .child('${_emailController.text.trim()}.jpg');
+
+        await ref.putFile(File(_pickedImage!.path));
+        userImageURL = await ref.getDownloadURL();
+
         await FirebaseFirestore.instance.collection('users').doc(uid).set({
           'userId': uid,
           'userName': _nameController.text,
-          'userImage': "",
+          'userImage': userImageURL,
           'userEmail': _emailController.text.toLowerCase(),
           'createdAt': Timestamp.now(),
           'userWish': [],

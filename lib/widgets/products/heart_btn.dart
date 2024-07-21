@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmart/providers/wishlist_provider.dart';
+import 'package:shopsmart/services/my_app_function.dart';
 
 class HeartBottonWidget extends StatefulWidget {
   const HeartBottonWidget({
@@ -20,6 +21,7 @@ class HeartBottonWidget extends StatefulWidget {
 }
 
 class _HeartBottonWidgetState extends State<HeartBottonWidget> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
@@ -29,20 +31,53 @@ class _HeartBottonWidgetState extends State<HeartBottonWidget> {
         shape: BoxShape.circle,
       ),
       child: IconButton(
-        onPressed: () {
-          wishlistProvider.addOrRemoveFromWishlist(productId: widget.productId);
+        onPressed: () async {
+          setState(() {
+            _isLoading = true;
+          });
+          try {
+            // wishlistsProvider.addOrRemoveFromWishlist(
+            //   productId: widget.productId,
+            // );
+            if (wishlistProvider.getWishlists.containsKey(widget.productId)) {
+              await wishlistProvider.removeWishlistItemFromFirestore(
+                wishlistId:
+                    wishlistProvider.getWishlists[widget.productId]!.wishlistId,
+                productId: widget.productId,
+              );
+            } else {
+              await wishlistProvider.addToWishlistFirebase(
+                productId: widget.productId,
+                context: context,
+              );
+            }
+            await wishlistProvider.fetchWishlist();
+          } catch (e) {
+            await MyAppFunctions.showErrorOrWarningDialog(
+              context: context,
+              subTitle: e.toString(),
+              fct: () {},
+            );
+          } finally {
+            setState(() {
+              _isLoading = false;
+            });
+          }
         },
         style: IconButton.styleFrom(elevation: 10),
-        icon: Icon(
-          wishlistProvider.isProductInWishlist(productId: widget.productId)
-              ? IconlyBold.heart
-              : IconlyLight.heart,
-          size: widget.size,
-          color:
-              wishlistProvider.isProductInWishlist(productId: widget.productId)
-                  ? Colors.red
-                  : Colors.grey,
-        ),
+        icon: _isLoading
+            ? const CircularProgressIndicator()
+            : Icon(
+                wishlistProvider.isProductInWishlist(
+                        productId: widget.productId)
+                    ? IconlyBold.heart
+                    : IconlyLight.heart,
+                size: widget.size,
+                color: wishlistProvider.isProductInWishlist(
+                        productId: widget.productId)
+                    ? Colors.red
+                    : Colors.grey,
+              ),
       ),
     );
   }

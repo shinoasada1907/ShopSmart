@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopsmart/providers/cart_provider.dart';
 import 'package:shopsmart/providers/products_provider.dart';
+import 'package:shopsmart/services/my_app_function.dart';
 import 'package:shopsmart/widgets/app_name_text.dart';
 import 'package:shopsmart/widgets/products/heart_btn.dart';
 import 'package:shopsmart/widgets/subtitle_text.dart';
@@ -102,7 +103,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 child: SizedBox(
                                   height: kBottomNavigationBarHeight - 10,
                                   child: ElevatedButton.icon(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      if (cartProvider.isProductInCart(
+                                          productId:
+                                              getCurrentProduct.productId)) {
+                                        return;
+                                      }
+                                      try {
+                                        await cartProvider.addToCartFirebase(
+                                            productId:
+                                                getCurrentProduct.productId,
+                                            qty: 1,
+                                            context: context);
+                                      } catch (e) {
+                                        await MyAppFunctions
+                                            .showErrorOrWarningDialog(
+                                          context: context,
+                                          subTitle: e.toString(),
+                                          fct: () {},
+                                        );
+                                      }
+                                    },
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.red,
                                         shape: RoundedRectangleBorder(
